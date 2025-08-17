@@ -2,7 +2,7 @@ import { createClient } from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
 
 // Replace these with your actual Sanity project details
-const projectId = 'your-project-id'; // Get this from your Sanity dashboard
+const projectId = 'qr456r95'; // Get this from your Sanity dashboard
 const dataset = 'production'; // or 'development'
 const apiVersion = '2024-01-01';
 
