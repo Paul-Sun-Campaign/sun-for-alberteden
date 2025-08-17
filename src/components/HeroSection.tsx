@@ -1,7 +1,22 @@
 import { Button } from "@/components/ui/button";
+import { useCampaignHero } from "@/hooks/useSanity";
+import { urlFor } from "@/lib/sanity";
 import paulSunPortrait from "@/assets/paul-sun-portrait.jpg";
 
 const HeroSection = () => {
+  const { data: heroData, isLoading } = useCampaignHero();
+  
+  // Fallback data - this will be used if Sanity isn't connected yet
+  const fallbackData = {
+    title: "Paul Sun",
+    subtitle: "Candidate for Albert Eden Pukutupapa Ward",
+    description: "Fighting for fiscal responsibility, improved infrastructure, and common-sense governance. It's time to respect every ratepayer dollar and deliver real results for Albert Eden.",
+    primaryButtonText: "View My Policies",
+    secondaryButtonText: "Get Involved"
+  };
+  
+  const content = heroData || fallbackData;
+  const candidateImage = heroData?.candidateImage ? urlFor(heroData.candidateImage).width(400).height(400).url() : paulSunPortrait;
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-campaign-navy via-campaign-blue to-campaign-light-blue overflow-hidden">
       {/* Background pattern overlay */}
@@ -17,10 +32,14 @@ const HeroSection = () => {
           <div className="text-center lg:text-left">
             <div className="mb-6">
               <h1 className="text-5xl lg:text-7xl font-bold text-white mb-4 leading-tight">
-                Paul <span className="text-campaign-gold">Sun</span>
+                {content.title.includes('Paul') ? (
+                  <>Paul <span className="text-campaign-gold">Sun</span></>
+                ) : (
+                  <span className="text-campaign-gold">{content.title}</span>
+                )}
               </h1>
               <p className="text-xl lg:text-2xl text-blue-100 font-medium mb-2">
-                Candidate for Albert Eden Pukutupapa Ward
+                {content.subtitle}
               </p>
               <p className="text-lg text-blue-200">
                 Albert Eden Local Board
@@ -32,17 +51,16 @@ const HeroSection = () => {
                 Practical Solutions for Our Community
               </h2>
               <p className="text-lg text-blue-100 leading-relaxed max-w-xl">
-                Fighting for fiscal responsibility, improved infrastructure, and common-sense governance. 
-                It's time to respect every ratepayer dollar and deliver real results for Albert Eden.
+                {content.description}
               </p>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button variant="hero" size="lg" className="px-8 py-4">
-                View My Policies
+                {content.primaryButtonText}
               </Button>
               <Button variant="campaign-outline" size="lg" className="px-8 py-4">
-                Get Involved
+                {content.secondaryButtonText}
               </Button>
             </div>
           </div>
@@ -52,7 +70,7 @@ const HeroSection = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-campaign-gold blur-2xl opacity-20 scale-110"></div>
               <img 
-                src={paulSunPortrait} 
+                src={candidateImage} 
                 alt="Paul Sun - Candidate for Albert Eden" 
                 className="relative z-10 w-80 h-80 lg:w-96 lg:h-96 object-cover rounded-full shadow-strong border-4 border-white"
               />

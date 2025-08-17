@@ -4,6 +4,7 @@ import PolicySection from "@/components/PolicySection";
 import AboutSection from "@/components/AboutSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import SanityStatus from "@/components/SanityStatus";
 
 const Index = () => {
   return (
@@ -16,6 +17,7 @@ const Index = () => {
         <ContactSection />
       </main>
       <Footer />
+      <SanityStatus />
     </div>
   );
 };
